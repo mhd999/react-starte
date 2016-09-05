@@ -7,7 +7,7 @@ let app = express();
 app.use(express.static('public'));
 
 //DB url
-const dbUrl = 'mongodb://admin:12345678@ds019866.mlab.com:19866/reactdb';
+const dbUrl = '';
 
 mongoClient.connect(dbUrl, (err, database) => {
     if(err) throw err;
