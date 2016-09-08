@@ -1,33 +1,32 @@
-// import express from 'express';
-const express  = require('express');
-const mongoClient = require('mongodb').MongoClient;
+import express from 'express';
+import schema from './data/schema';
+import GraphQLHTTP from 'express-graphql';
+
+import {MongoClient} from 'mongodb';
 
 let app = express();
-
 app.use(express.static('public'));
 
-//DB url
-const dbUrl = '';
+let db;
+const dbUrl = 'mongodb://admin:12345678@ds019866.mlab.com:19866/reactdb';	
 
-mongoClient.connect(dbUrl, (err, database) => {
-    if(err) throw err;
+MongoClient.connect(dbUrl, (err, database) => {
+	if (err) throw err;
 
-    let db = database;
-
-
-    app.get('/api/v1/items', (req, res) => {
-        db.collection('items').find({}).toArray((err, items) => {
-            if(err) throw err;
-            res.json(items);
-        });
-    });
+  	db = database;
+	app.use('/graphql', GraphQLHTTP({
+		schema: schema(db),
+		graphiql: true
+	}));
 
 
-    //start node server
-    app.listen(3000, () => {console.log('App listen to port 3000')});
+	app.get('/api/v1/items', (req, res) => {
+	    db.collection('items').find({}).toArray((err, items) => {
+	        if(err) throw err;
+	        res.json(items);
+	    });
+	});
 
-    
 
-}); 
-
-
+	app.listen(3000, () => console.log('Listening on port 3000'));
+});

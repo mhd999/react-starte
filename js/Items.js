@@ -1,6 +1,6 @@
 import React from 'react';
-import api from '../api';
-import itemsStore from '../stores/itemsStore';
+import api from './api';
+import itemsStore from './stores/itemsStore';
 
 //read from items store
 let _getState = () => {
