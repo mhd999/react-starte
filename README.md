@@ -2,7 +2,7 @@
 
 This a react starter project uisng Flux, and babel.
 
-### Flux desgin pattern
+### Flux design pattern
 ![alt tag](https://s3-eu-west-1.amazonaws.com/vas-pics/flux.png)
 
 ### Installation
