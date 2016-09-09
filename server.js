@@ -23,7 +23,7 @@ MongoClient.connect(dbUrl, (err, database) => {
 	app.get('/api/v1/items', (req, res) => {
 	    db.collection('items').find({}).toArray((err, items) => {
 	        if(err) throw err;
-	        res.json(items);
+	        res.status(200).json(items);
 	    });
 	});
 
