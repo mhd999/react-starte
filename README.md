@@ -2,7 +2,7 @@
 
 This a react starter project uisng Flux, and babel.
 
-### Flux design pattern
+### Flux desgin pattern
 ![alt tag](https://s3-eu-west-1.amazonaws.com/vas-pics/flux.png)
 
 ### Installation
@@ -33,6 +33,6 @@ docker build -t {TAG_NAME} .
 docker run -d -p 8080:3000 {TAG_NAME}
 ```
 ### TODO
--Integrate Relay #Realy-branch
--Try Redux state manager influenced by Functional Programming principles
--Try state manager influenced by Object-Oriented Programming principles
+1. Integrate Relay #Realy-branch
+2. Try Redux state manager influenced by Functional Programming principles
+3. Try state manager influenced by Object-Oriented Programming principles
