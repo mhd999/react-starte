@@ -4,7 +4,7 @@
   "description": "A react base project",
   "scripts": {
     "start": "./node_modules/.bin/babel-node --presets react,es2015 server.js",
-    "test": "mocha --recursive"
+    "test": "mocha --require babel-register;"
   },
   "keywords": [
     "react",
@@ -34,6 +34,7 @@
     "webpack": "^1.12.9"
   },
   "devDependencies": {
+    "babel-register": "^6.14.0",
     "mocha": "^3.0.2",
     "supertest": "^2.0.0"
   }
