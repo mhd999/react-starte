@@ -17,7 +17,13 @@ $ npm install -d
 $ npm install -g nodemon
 $ nodemon
 ```
-### Installation 
+### run project
+```sh
+$ cd root project
+$ webpack -w -d
+$ nodemon
+```
+### run test
 
 ```sh
 $ cd root project
