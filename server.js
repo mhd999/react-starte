@@ -7,6 +7,7 @@ import {MongoClient} from 'mongodb';
 let app = express();
 app.use(express.static('public'));
 
+
 let db;
 const dbUrl = 'mongodb://admin:12345678@ds019866.mlab.com:19866/reactdb';	
 
@@ -28,7 +29,10 @@ MongoClient.connect(dbUrl, (err, database) => {
 	});
 
 
-	app.listen(3000, () => console.log('Listening on port 3000'));
+	// app.listen(3000, () => console.log('Listening on port 3000'));
+	if(!module.parent){ 
+    	app.listen(3000); 
+	}
 });
 
 export default app;

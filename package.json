@@ -4,7 +4,8 @@
   "description": "A react base project",
   "scripts": {
     "start": "./node_modules/.bin/babel-node --presets react,es2015 server.js",
-    "test": "mocha --require babel-register;"
+    "test": "mocha --require babel-register",
+    "test-watch": "mocha --require babel-register --watch"
   },
   "keywords": [
     "react",
