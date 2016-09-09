@@ -29,6 +29,12 @@ $ nodemon
 $ cd root project
 $ npm test
 ```
+#### Run test and watch files 
+```sh
+$ cd root project
+$ npm run test-watch
+```
+
 ### Build docker image
 ```sh
 docker build -t {TAG_NAME} .
