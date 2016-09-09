@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:6.2.2
 
 MAINTAINER Mohammad Al Mouallem
 
@@ -9,8 +9,6 @@ COPY      . /var/www
 WORKDIR   /var/www
 
 RUN       npm install
-
-VOLUME ["/var/www"]
 
 EXPOSE $PORT
 
