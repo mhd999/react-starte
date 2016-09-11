@@ -9,7 +9,7 @@ describe('Item API Tests', function(){
         const url = '/api/v1/items';
 						
         it('should return 200 when user get all items', function(next){
-			agent.get('/api/v1/items')
+			agent.get('/')
 				.expect(200)
 				.end(function(error, response){
 					if(error)

@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import schema from './data/schema';
 import GraphQLHTTP from 'express-graphql';
 
@@ -6,6 +7,7 @@ import {MongoClient} from 'mongodb';
 
 let app = express();
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 
 let db;
@@ -21,7 +23,7 @@ MongoClient.connect(dbUrl, (err, database) => {
 	}));
 
 
-	app.get('/api/v1/items', (req, res) => {
+	app.get('/', (req, res) => {
 	    db.collection('items').find({}).toArray((err, items) => {
 	        if(err) throw err;
 	        res.status(200).json(items);
