@@ -8,6 +8,19 @@ import {
 
 let Schema = (db) => {
 
+  class Store {}
+  let store = new Store();
+
+  let storeType = new GraphQLObjectType({
+      name: 'Store',
+      fields: () => ({
+        items: {
+          type: new GraphQLList(itemType),
+          resolve: () => db.collection("items").find({}).toArray()
+        }
+      })
+  });
+
   let itemType = new GraphQLObjectType({
     name: 'Item',
     fields: () => ({
@@ -21,9 +34,9 @@ let Schema = (db) => {
     query: new GraphQLObjectType({
       name: 'Query',
       fields: () => ({
-        items: {
-          type: new GraphQLList(itemType),
-          resolve: () => db.collection("items").find({}).toArray()
+        store: {
+          type: storeType,
+          resolve: () => store
         }
       })
     })
