@@ -64,25 +64,44 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_Items2.default, null), document.getElementById('react'));
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	console.log(function () {
-	    return {
-	        children: [{
-	            fieldName: 'title',
-	            kind: 'Field',
-	            metadata: {},
-	            type: 'String'
-	        }],
-	        fieldName: 'items',
-	        kind: 'Query',
-	        metadata: {
-	            isPlural: true
-	        },
-	        name: 'Test',
-	        type: 'Item'
-	    };
-	}());
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ItemsRoute = function (_Relay$Route) {
+	    _inherits(ItemsRoute, _Relay$Route);
+
+	    function ItemsRoute() {
+	        _classCallCheck(this, ItemsRoute);
+
+	        return _possibleConstructorReturn(this, (ItemsRoute.__proto__ || Object.getPrototypeOf(ItemsRoute)).apply(this, arguments));
+	    }
+
+	    return ItemsRoute;
+	}(_reactRelay2.default.Route);
+
+	ItemsRoute.routeName = 'ItemsRoute';
+	ItemsRoute.queries = {
+	    store: function store(Component) {
+	        return function (RQL_0) {
+	            return {
+	                children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
+	                fieldName: 'store',
+	                kind: 'Query',
+	                metadata: {},
+	                name: 'ItemsQuery',
+	                type: 'Store'
+	            };
+	        }(Component.getFragment('store'));
+	    }
+	};
+
+	_reactDom2.default.render(_react2.default.createElement(_reactRelay2.default.RootContainer, {
+	    Component: _Items2.default,
+	    route: new ItemsRoute()
+	}), document.getElementById('react'));
 
 /***/ },
 /* 1 */
@@ -44248,6 +44267,10 @@
 
 	var _reactRelay2 = _interopRequireDefault(_reactRelay);
 
+	var _item = __webpack_require__(463);
+
+	var _item2 = _interopRequireDefault(_item);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44269,21 +44292,8 @@
 	        key: 'render',
 	        value: function render() {
 	            //define list of items
-	            var itemsList = this.state.items.slice(0, this.props.limit).map(function (item) {
-	                return _react2.default.createElement(
-	                    'li',
-	                    { key: item._id },
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        item.title
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        item.price
-	                    )
-	                );
+	            var itemsList = this.props.store.items.slice(0, this.props.limit).map(function (item) {
+	                return _react2.default.createElement(_item2.default, { key: item._id, item: item });
 	            });
 	            return _react2.default.createElement(
 	                'ul',
@@ -44304,9 +44314,129 @@
 	Items.defaultProps = {
 	    limit: 1
 	};
-	Items = _reactRelay2.default.createContainer(Items, {});
+	Items = _reactRelay2.default.createContainer(Items, {
+	    fragments: {
+	        store: function store() {
+	            return function (RQL_0) {
+	                return {
+	                    children: [{
+	                        children: [].concat.apply([], [{
+	                            fieldName: '_id',
+	                            kind: 'Field',
+	                            metadata: {},
+	                            type: 'String'
+	                        }, _reactRelay2.default.QL.__frag(RQL_0)]),
+	                        fieldName: 'items',
+	                        kind: 'Field',
+	                        metadata: {
+	                            canHaveSubselections: true,
+	                            isPlural: true
+	                        },
+	                        type: 'Item'
+	                    }],
+	                    id: _reactRelay2.default.QL.__id(),
+	                    kind: 'Fragment',
+	                    metadata: {},
+	                    name: 'Items_StoreRelayQL',
+	                    type: 'Store'
+	                };
+	            }(_item2.default.getFragment('item'));
+	        }
+	    }
+	});
 
 	exports.default = Items;
+
+/***/ },
+/* 463 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRelay = __webpack_require__(159);
+
+	var _reactRelay2 = _interopRequireDefault(_reactRelay);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Item = function (_React$Component) {
+	    _inherits(Item, _React$Component);
+
+	    function Item() {
+	        _classCallCheck(this, Item);
+
+	        return _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).apply(this, arguments));
+	    }
+
+	    _createClass(Item, [{
+	        key: 'render',
+	        value: function render() {
+	            var item = this.props.item;
+
+	            return _react2.default.createElement(
+	                'li',
+	                { key: item._id },
+	                item.title,
+	                ' - ',
+	                item.price
+	            );
+	        }
+	    }]);
+
+	    return Item;
+	}(_react2.default.Component);
+	// define the relay container for the Component
+
+
+	Item = _reactRelay2.default.createContainer(Item, {
+	    fragments: {
+	        item: function item() {
+	            return function () {
+	                return {
+	                    children: [{
+	                        fieldName: '_id',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'title',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'String'
+	                    }, {
+	                        fieldName: 'price',
+	                        kind: 'Field',
+	                        metadata: {},
+	                        type: 'Int'
+	                    }],
+	                    id: _reactRelay2.default.QL.__id(),
+	                    kind: 'Fragment',
+	                    metadata: {},
+	                    name: 'Item_ItemRelayQL',
+	                    type: 'Item'
+	                };
+	            }();
+	        }
+	    }
+	});
+
+	exports.default = Item;
 
 /***/ }
 /******/ ]);

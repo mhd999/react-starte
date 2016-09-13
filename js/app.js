@@ -4,14 +4,21 @@ import Relay from 'react-relay';
 
 import Items from './Items';
 
-ReactDom.render(<Items />, document.getElementById('react'));
-
-console.log(
-    Relay.QL`
-    query Test{
-        items{
-            title
-        }
+class ItemsRoute extends Relay.Route {
+    static routeName = 'ItemsRoute';
+    static queries = {
+        store: (Component) => Relay.QL`
+            query ItemsQuery {
+                store {${Component.getFragment('store')}}
+            }
+        `
     }
-    `
-)
+}
+ReactDom.render(
+    <Relay.RootContainer  
+        Component = {Items}
+        route={new ItemsRoute()}
+    />,
+     document.getElementById('react')
+     
+);
