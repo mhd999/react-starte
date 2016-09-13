@@ -3,8 +3,22 @@ import {
   GraphQLObjectType,
   GraphQLList,
   GraphQLInt,
-  GraphQLString
+  GraphQLString,
+  GraphQLID,
+  GraphQLNonNull
 } from 'graphql';
+
+//Relay helper methods
+import {
+  globalIdField,
+  fromGlobalId,
+  nodeDefinitions,
+  connectionDefinitions,
+  connectionArgs,
+  connectionFromPromisedArray,
+  mutationWithClientMutationId
+} from "graphql-relay";
+  
 
 let Schema = (db) => {
 
@@ -14,18 +28,30 @@ let Schema = (db) => {
   let itemType = new GraphQLObjectType({
     name: 'Item',
     fields: () => ({
-      _id: { type: GraphQLString },
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+        resolve: (obj) => obj._id
+      },
       title: { type: GraphQLString },
       price: { type: GraphQLInt }
     })
   });
 
+  let itemConnection = connectionDefinitions({
+    name: 'Item',
+    nodeType: itemType
+  });
+
   let storeType = new GraphQLObjectType({
     name: 'Store',
     fields: () => ({
-      items: {
-        type: new GraphQLList(itemType),
-        resolve: () => db.collection("items").find({}).toArray()
+      itemConnection: {
+        type: itemConnection.connectionType,
+        args: connectionArgs,
+        resolve: (_, args) => connectionFromPromisedArray(
+          db.collection("items").find({}).toArray(),
+          args
+        )
       }
     })
   });

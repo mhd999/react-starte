@@ -44292,7 +44292,7 @@
 	        key: 'render',
 	        value: function render() {
 	            //define list of items
-	            var itemsList = this.props.store.items.slice(0, this.props.limit).map(function (item) {
+	            var itemsList = this.props.store.items.map(function (item) {
 	                return _react2.default.createElement(_item2.default, { key: item._id, item: item });
 	            });
 	            return _react2.default.createElement(
@@ -44308,12 +44308,6 @@
 	//Declare the data requerments for this Component and create a relay container
 
 
-	Items.propTypes = {
-	    limit: _react2.default.PropTypes.number
-	};
-	Items.defaultProps = {
-	    limit: 1
-	};
 	Items = _reactRelay2.default.createContainer(Items, {
 	    fragments: {
 	        store: function store() {
