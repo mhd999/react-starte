@@ -1,8 +1,14 @@
 # React Starter Project
 
 This a react starter project uisng Flux, and babel.
+### Relay and GraphQL
+code on master branch and Relay branch
+
+![Alt text](/public/images/relay.png?raw=true "Relay and GraphQl")
 
 ### Flux desgin pattern
+code on the flux branch
+
 ![alt tag](https://s3-eu-west-1.amazonaws.com/vas-pics/flux.png)
 
 ### Installation
@@ -45,6 +51,5 @@ docker build -t {TAG_NAME} .
 docker run -d -p 8080:3000 {TAG_NAME}
 ```
 ### TODO
-1. Integrate Relay #Realy-branch
 2. Try Redux state manager influenced by Functional Programming principles
 3. Try Mobx state manager influenced by Object-Oriented Programming principles
