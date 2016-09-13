@@ -49,7 +49,7 @@ let Schema = (db) => {
         type: itemConnection.connectionType,
         args: connectionArgs,
         resolve: (_, args) => connectionFromPromisedArray(
-          db.collection("items").find({}).toArray(),
+          db.collection("items").find({}).limit(args.first).toArray(),
           args
         )
       }

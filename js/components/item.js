@@ -6,7 +6,7 @@ class Item extends React.Component {
     render() {
         let {item} = this.props;
         return (
-            <li key={item._id}>
+            <li key={item.id}>
                 {item.title} - {item.price}
             </li>
         );
@@ -17,7 +17,7 @@ Item = Relay.createContainer(Item, {
     fragments: {
         item: () => Relay.QL`
         fragment on Item {
-            _id,
+            id,
             title,
             price
         }

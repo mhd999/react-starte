@@ -44283,22 +44283,51 @@
 	    _inherits(Items, _React$Component);
 
 	    function Items() {
+	        var _ref;
+
+	        var _temp, _this, _ret;
+
 	        _classCallCheck(this, Items);
 
-	        return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).apply(this, arguments));
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Items.__proto__ || Object.getPrototypeOf(Items)).call.apply(_ref, [this].concat(args))), _this), _this.setLimit = function (e) {
+	            var newLimit = Number(e.target.value);
+	            _this.props.relay.setVariables({ limit: newLimit });
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
 	    _createClass(Items, [{
 	        key: 'render',
 	        value: function render() {
 	            //define list of items
-	            var itemsList = this.props.store.items.map(function (item) {
-	                return _react2.default.createElement(_item2.default, { key: item._id, item: item });
+	            var itemsList = this.props.store.itemConnection.edges.map(function (edge) {
+	                return _react2.default.createElement(_item2.default, { key: edge.node.id, item: edge.node });
 	            });
 	            return _react2.default.createElement(
-	                'ul',
+	                'div',
 	                null,
-	                itemsList
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: this.setLimit },
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '1' },
+	                        '1'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '2', selected: true },
+	                        '2'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    itemsList
+	                )
 	            );
 	        }
 	    }]);
@@ -44309,24 +44338,90 @@
 
 
 	Items = _reactRelay2.default.createContainer(Items, {
+	    initialVariables: {
+	        limit: 2
+	    },
 	    fragments: {
 	        store: function store() {
 	            return function (RQL_0) {
 	                return {
 	                    children: [{
-	                        children: [].concat.apply([], [{
-	                            fieldName: '_id',
-	                            kind: 'Field',
+	                        calls: [{
+	                            kind: 'Call',
 	                            metadata: {},
-	                            type: 'String'
-	                        }, _reactRelay2.default.QL.__frag(RQL_0)]),
-	                        fieldName: 'items',
+	                            name: 'first',
+	                            value: {
+	                                kind: 'CallVariable',
+	                                callVariableName: 'limit'
+	                            }
+	                        }],
+	                        children: [{
+	                            children: [{
+	                                children: [].concat.apply([], [{
+	                                    fieldName: 'id',
+	                                    kind: 'Field',
+	                                    metadata: {
+	                                        isRequisite: true
+	                                    },
+	                                    type: 'ID'
+	                                }, _reactRelay2.default.QL.__frag(RQL_0)]),
+	                                fieldName: 'node',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    canHaveSubselections: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'Item'
+	                            }, {
+	                                fieldName: 'cursor',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'String'
+	                            }],
+	                            fieldName: 'edges',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isPlural: true
+	                            },
+	                            type: 'ItemEdge'
+	                        }, {
+	                            children: [{
+	                                fieldName: 'hasNextPage',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'Boolean'
+	                            }, {
+	                                fieldName: 'hasPreviousPage',
+	                                kind: 'Field',
+	                                metadata: {
+	                                    isGenerated: true,
+	                                    isRequisite: true
+	                                },
+	                                type: 'Boolean'
+	                            }],
+	                            fieldName: 'pageInfo',
+	                            kind: 'Field',
+	                            metadata: {
+	                                canHaveSubselections: true,
+	                                isGenerated: true,
+	                                isRequisite: true
+	                            },
+	                            type: 'PageInfo'
+	                        }],
+	                        fieldName: 'itemConnection',
 	                        kind: 'Field',
 	                        metadata: {
 	                            canHaveSubselections: true,
-	                            isPlural: true
+	                            isConnection: true
 	                        },
-	                        type: 'Item'
+	                        type: 'ItemConnection'
 	                    }],
 	                    id: _reactRelay2.default.QL.__id(),
 	                    kind: 'Fragment',
@@ -44385,7 +44480,7 @@
 
 	            return _react2.default.createElement(
 	                'li',
-	                { key: item._id },
+	                { key: item.id },
 	                item.title,
 	                ' - ',
 	                item.price
@@ -44404,10 +44499,12 @@
 	            return function () {
 	                return {
 	                    children: [{
-	                        fieldName: '_id',
+	                        fieldName: 'id',
 	                        kind: 'Field',
-	                        metadata: {},
-	                        type: 'String'
+	                        metadata: {
+	                            isRequisite: true
+	                        },
+	                        type: 'ID'
 	                    }, {
 	                        fieldName: 'title',
 	                        kind: 'Field',

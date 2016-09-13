@@ -5,22 +5,42 @@ import Relay from 'react-relay';
 import Item from './components/item'
 
 class Items extends React.Component {
+    setLimit = (e)=> {
+       let newLimit = Number(e.target.value);
+       this.props.relay.setVariables({limit: newLimit});
+    }
     render() {
         //define list of items
-        let itemsList = this.props.store.items.map(item => {
-            return <Item key={item._id} item={item}/>;
+        let itemsList = this.props.store.itemConnection.edges.map(edge => {
+            return <Item key={edge.node.id} item={edge.node}/>;
         })
-        return (<ul>{itemsList}</ul>);
+        return (
+                <div>
+                    <select onChange={this.setLimit}>
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                    </select>
+                    <ul>{itemsList}</ul>
+                </div>
+            );
     }
 }
 //Declare the data requerments for this Component and create a relay container
 Items = Relay.createContainer(Items, {
+    initialVariables: {
+        limit: 2
+    },
     fragments: {
         store: () => Relay.QL`
         fragment on Store {
-            items {
-                _id,
-                ${Item.getFragment('item')}
+            itemConnection(first: $limit) {
+                edges{
+                    node{
+                         id,
+                        ${Item.getFragment('item')}
+                    }
+                }
+               
             }
         }
         `
