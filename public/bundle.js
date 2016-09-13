@@ -44319,8 +44319,8 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'option',
-	                        { value: '2', selected: true },
-	                        '2'
+	                        { value: '100', selected: true },
+	                        '100'
 	                    )
 	                ),
 	                _react2.default.createElement(

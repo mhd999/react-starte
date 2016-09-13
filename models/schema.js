@@ -3,6 +3,7 @@ import {
   GraphQLObjectType,
   GraphQLList,
   GraphQLInt,
+  GraphQLFloat,
   GraphQLString,
   GraphQLID,
   GraphQLNonNull
@@ -45,6 +46,7 @@ let Schema = (db) => {
   let storeType = new GraphQLObjectType({
     name: 'Store',
     fields: () => ({
+      id: globalIdField('Store'),
       itemConnection: {
         type: itemConnection.connectionType,
         args: connectionArgs,
@@ -56,6 +58,32 @@ let Schema = (db) => {
     })
   });
 
+  //mutation
+  let createItemMutation = mutationWithClientMutationId({
+    name: 'CreateItem',
+
+    inputFields: {
+      title: {type: new GraphQLNonNull(GraphQLString)},
+      price: {type: new GraphQLNonNull(GraphQLFloat)}
+    },
+    //return after mutateAndGetPayload
+    outputFields: {
+      itemEdge: {
+        type: itemConnection.edgeType,
+        resolve: (obj) => ({node:obj.ops[0], cursor: obj.insertedId}) 
+      }, 
+      store: {
+        type: storeType,
+        resolve: () => store
+      }
+    },
+
+    mutateAndGetPayload: ({title, price}) => {
+      return db.collection("items").insertOne({title, price});
+    }
+  });
+
+
   let schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'Query',
@@ -66,8 +94,18 @@ let Schema = (db) => {
         }
       })
     
+    }),
+     mutation: new GraphQLObjectType({
+      name: 'Mutation',
+      fields: ()=> ({
+        createItem: createItemMutation
+      })
     })
   });
+
+
+
+ 
 
   return schema
 };

@@ -18,7 +18,7 @@ class Items extends React.Component {
                 <div>
                     <select onChange={this.setLimit}>
                         <option value="1">1</option>
-                        <option value="2" selected>2</option>
+                        <option value="100" selected>100</option>
                     </select>
                     <ul>{itemsList}</ul>
                 </div>
