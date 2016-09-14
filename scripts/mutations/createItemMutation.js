@@ -29,7 +29,7 @@ class createItemMutation extends Relay.Mutation {
             connectionName: 'itemConnection',
             edgeName: 'itemEdge',
             rangeBehaviors: {
-                '': 'append'
+                '': 'prepend'
             },
         }];
     }

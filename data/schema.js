@@ -1,3 +1,4 @@
+// @flow
 import {
   GraphQLSchema,
   GraphQLObjectType,
@@ -21,7 +22,7 @@ import {
 } from "graphql-relay";
   
 
-let Schema = (db) => {
+let Schema = (db: Object) => {
 
   let store = {};
 
@@ -34,7 +35,12 @@ let Schema = (db) => {
         resolve: (obj) => obj._id
       },
       title: { type: GraphQLString },
-      price: { type: GraphQLInt }
+      price: { type: GraphQLInt },
+      createdAt: 
+        {
+          type: GraphQLString,
+          resolve: (obj) => new Date(obj.createdAt).toISOString()
+        }
     })
   });
 
@@ -51,7 +57,10 @@ let Schema = (db) => {
         type: itemConnection.connectionType,
         args: connectionArgs,
         resolve: (_, args) => connectionFromPromisedArray(
-          db.collection("items").find({}).limit(args.first).toArray(),
+          db.collection("items")
+            .find({})
+            .sort({createdAt: -1})
+            .limit(args.first).toArray(),
           args
         )
       }
@@ -79,7 +88,11 @@ let Schema = (db) => {
     },
 
     mutateAndGetPayload: ({title, price}) => {
-      return db.collection("items").insertOne({title, price});
+      return db.collection("items").insertOne({
+        title, 
+        price,
+        createdAt: Date.now()
+      });
     }
   });
 

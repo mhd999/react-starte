@@ -42,9 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*******************!*\
-  !*** ./js/app.js ***!
-  \*******************/
+/*!************************!*\
+  !*** ./scripts/app.js ***!
+  \************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45635,9 +45635,9 @@
 
 /***/ },
 /* 462 */
-/*!*********************!*\
-  !*** ./js/Items.js ***!
-  \*********************/
+/*!**************************!*\
+  !*** ./scripts/Items.js ***!
+  \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45688,6 +45688,7 @@
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Items.__proto__ || Object.getPrototypeOf(Items)).call.apply(_ref, [this].concat(args))), _this), _this.setLimit = function (e) {
 	            var newLimit = Number(e.target.value);
+	            console.log(newLimit);
 	            _this.props.relay.setVariables({ limit: newLimit });
 	        }, _this.addItem = function (e) {
 	            e.preventDefault();
@@ -45760,7 +45761,7 @@
 	
 	Items = _reactRelay2.default.createContainer(Items, {
 	    initialVariables: {
-	        limit: 2
+	        limit: 100
 	    },
 	    fragments: {
 	        store: function store() {
@@ -45866,9 +45867,9 @@
 
 /***/ },
 /* 463 */
-/*!*******************************!*\
-  !*** ./js/components/item.js ***!
-  \*******************************/
+/*!************************************!*\
+  !*** ./scripts/components/item.js ***!
+  \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45962,9 +45963,9 @@
 
 /***/ },
 /* 464 */
-/*!********************************************!*\
-  !*** ./js/mutations/createItemMutation.js ***!
-  \********************************************/
+/*!*************************************************!*\
+  !*** ./scripts/mutations/createItemMutation.js ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46118,7 +46119,7 @@
 	                connectionName: 'itemConnection',
 	                edgeName: 'itemEdge',
 	                rangeBehaviors: {
-	                    '': 'append'
+	                    '': 'prepend'
 	                }
 	            }];
 	        }

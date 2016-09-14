@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./js/app.js",
+  entry: "./scripts/app.js",
   output: {
     path: __dirname + "/public",
     filename: "bundle.js"
@@ -9,10 +9,9 @@ module.exports = {
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
-          plugins: [__dirname + '/babelRelayPlugin']
+          plugins: [__dirname + '/scripts/babelRelayPlugin']
         }
       }
     ]
   }
 };
-

@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 class Item extends React.Component {
     render() {
         let {item} = this.props;
-        return (
+        return ( 
             <li key={item.id}>
                 {item.title} - {item.price}
             </li>

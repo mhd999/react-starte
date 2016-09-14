@@ -8,6 +8,7 @@ import createItemMutation from "./mutations/createItemMutation"
 class Items extends React.Component {
     setLimit = (e)=> {
        let newLimit = Number(e.target.value);
+       console.log(newLimit);
        this.props.relay.setVariables({limit: newLimit});
     }
     addItem = (e)=> {
@@ -51,7 +52,7 @@ class Items extends React.Component {
 //Declare the data requerments for this Component and create a relay container
 Items = Relay.createContainer(Items, {
     initialVariables: {
-        limit: 2
+        limit: 100
     },
     fragments: {
         store: () => Relay.QL`
